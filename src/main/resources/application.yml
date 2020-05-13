@@ -1,0 +1,9 @@
+micronaut:
+  application:
+    name: jutebag
+  router:
+    static-resources:
+      main:
+        paths: classpath:webapp
+        mapping: /static/**
+

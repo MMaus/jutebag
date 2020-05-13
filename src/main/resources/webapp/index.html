@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <!-- actual debug version
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+//-->
+    <script src="vue-debug.js"></script>
+    <!-- production version, optimized for size and speed -->
+    <!--
+<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+-->
+
+
+    <script src="templates.js"></script>
+
+</head>
+
+<body>
+    <h1>
+        Vue test
+    </h1>
+    <div id="app">
+        {{message}}
+    </div>
+
+    <div id="app-2">
+        <span v-bind:title="message">
+            Hover the mouse over and see
+            the dynamic title!
+        </span>
+    </div>
+
+    <div id="dynList">
+        <ol>
+            <li v-for="todo in todos">
+                {{ todo.text }}
+            </li>
+        </ol>
+    </div>
+
+    <div id="interact">
+        <p>{{ message }}</p>
+        <button v-on:click="reverseMessage">Reverse!</button>
+    </div>
+
+    <div id="uinput">
+        <p>{{ message }}</p>
+        <input v-model="message"></input>
+    </div>
+
+    <div id="dynamicTodo">
+        <ol>
+            <todo-item v-for="item in shoppingList"
+            v-bind:todo="item"
+            v-bind:id="item.id"
+            ></todo-item>
+        </ol>
+    </div>
+
+    <!--
+****************************************************************************
+***************** Begin of VUE scripts ************************
+****************************************************************************
+        -->
+
+    <script src="shopping.js"></script>
+
+</body>
+
+</html>
