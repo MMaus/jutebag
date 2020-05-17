@@ -6,13 +6,14 @@
     <link rel="icon" href="img/jutebag_icon.png">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
+    <script src="vue-debug.js"></script>
     <title>JuteBag shopping list</title>
     <link rel="stylesheet" href="css/bootstrap.min.css">
 </head>
 
 <body>
 
-    <div class="container-fluid p-3 my-3 border bg-dark text-white">
+    <div class="container-fluid p-3 bg-dark text-white">
         <h1 class="display-1">JuteBag</h1>
         <h2>Your Shoppinglist</h2>
     </div>
@@ -21,7 +22,39 @@
         <h3>shopping items</h3>
     </div>
 
+    <div id="control">
+        <input type="text" id="newItem"></input>
+        <button class="button" onclick="addItem()">add</button>
+        <br />
+        <p id="localData">(local data)</p>
+        <br />
+        <button class="button bg-dark" onclick="store()">store</button>
+        <button class="button bg-primary" onclick="restore()">restore</button>
+    </div>
+
+    <div id="shoppingList">
+        <!-- content from vue -->
+
+        <script type="text/x-template" id="itemTemplate">
+            <div>
+                <div v-for="item in bag">
+                    <div class="row border" style="margin: auto">
+                        <div class="col bg-secondary text-white">{{item | pprint}}</div>
+                    </div>
+                </div>
+            </div>
+        </script>
+
+    </div>
+
+    <div id="test_space">{{message}},
+        <div id="other">
+            I need {{qty}} beer!</div>
+    </div>
+
+
     <!-- example of a shopping item-->
+    <!--
     <div class="row p-1 my-1 border">
         <div class="col-sm-2 bg-primary"><img src="img/butter.jpg" class="img-fluid rounded-circle" /></div>
         <div class="col-sm-7">
@@ -43,23 +76,40 @@
             </table>
         </div>
     </div>
+    -->
 
     <!-- another try for the layout -->
-    <div class="row p-1 my-1 border">
+    <div id="item_milk" class="row bg-secondary" style="margin: auto">
         <div class="col-sm-2 bg-primary"><img src="img/milk.jpg" class="img-fluid rounded-circle" /></div>
-        <div class="col-sm-7">
+        <div class="col-sm-8">
             <p>Milk</p>
+            <p>{{message}}</p>
         </div>
         <div class="col-sm-2">
             <div class="btn-group">
-                <button type="button" class="btn btn-dark btn-lg">-</button>
-                <button type="button" class="btn btn-primary btn-lg">1</button>
-                <button type="button" class="btn btn-dark btn-lg">+</button>
+                <button type="button" class="btn btn-dark btn-lg" v-on:click="qty -= 1">-</button>
+                <button type="button" class="btn btn-primary btn-lg">{{qty}}</button>
+                <button type="button" class="btn btn-dark btn-lg" v-on:click="qty += 1">+</button>
             </div>
         </div>
     </div>
 
+    <div id="item_milk2" class="row border" style="margin: auto">
+        <div class="col-sm-2 bg-primary"><img src="img/milk.jpg" class="img-fluid rounded-circle" /></div>
+        <div class="col-sm-7">
+            <p>Bio-Milk</p>
+            <p>{{message}}</p>
+        </div>
+        <div class="col-sm-2">
+            <div class="btn-group">
+                <button type="button" class="btn btn-dark btn-lg" v-on:click="qty -= 1">-</button>
+                <button type="button" class="btn btn-primary btn-lg">{{qty}}</button>
+                <button type="button" class="btn btn-dark btn-lg" v-on:click="qty += 1">+</button>
+            </div>
+        </div>
+    </div>
 
+    <!--
     <div class="card">
         <div class="card-body">
             basic card
@@ -86,8 +136,10 @@
     <div class="alert alert-success">
         <strong>Success!</strong> You changed the quantity!
     </div>
+-->
 
     <!-- a jumbotron is a big grey box -->
+    <!--
     <div class="jumbotron text-center">
         <h1>My First Bootstrap Page</h1>
         <p>Resize this responsive page to see the effect!</p>
@@ -109,7 +161,8 @@
             </div>
         </div>
     </div>
-
+-->
+    <script src="jutebag-main.js"></script>
 
     <!-- TODO:
         wget those files and put them locally! 
