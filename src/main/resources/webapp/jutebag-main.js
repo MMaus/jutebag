@@ -85,7 +85,10 @@ function fetchBag() {
     .catch(error => console.log("ERROR:" + error))
 }
 
-function postRemote() {
+
+var postRes = {}
+
+function addToBag() {
     fetch("http://localhost:8080/jutebag/add",
     {
         method: 'POST',
@@ -95,11 +98,18 @@ function postRemote() {
         body: 
             JSON.stringify( 
                 {
-                    item: "beet",
+                    item: "beer",
                     qty: 20
                 }
                 )
-    }).then(res => { return res.json() })
-    .then(data => console.log('ERROR'))
+    }).then(res => {postRes = res; return res.json()})
+    .then(data => {
+        console.log('result = ' + JSON.stringify(data));
+        console.log("item = " + data.item);
+        console.log("qty = " + data.qty);
+        document.getElementById("remoteData").innerHTML = JSON.stringify(data);
+    }
+    
+    )
 
 }
