@@ -75,3 +75,31 @@ function restore() {
     document.getElementById("localData").innerHTML = parsedContent
     shoppingList.$data.bag = parsedContent
 }
+
+function fetchBag() {
+    fetch("http://localhost:8080/jutebag/bag")
+    .then(res => res.json())
+    //.then(blob => console.log(blob))
+    //.then(data => { console.log("received data:" + data); return data;})
+    .then(data => document.getElementById("remoteData").innerHTML = "item=" + data.item + ", qty=" + data.qty)
+    .catch(error => console.log("ERROR:" + error))
+}
+
+function postRemote() {
+    fetch("http://localhost:8080/jutebag/add",
+    {
+        method: 'POST',
+        headers: {
+            'Content-Type' : 'application/json'
+        },
+        body: 
+            JSON.stringify( 
+                {
+                    item: "beet",
+                    qty: 20
+                }
+                )
+    }).then(res => { return res.json() })
+    .then(data => console.log('ERROR'))
+
+}
