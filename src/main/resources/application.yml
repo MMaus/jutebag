@@ -7,3 +7,10 @@ micronaut:
         paths: classpath:webapp
         mapping: /static/**
 
+      local:
+        mapping: "/local/**"
+        # works!
+        # paths:  "file://home/moritz/01 CURRENT/jutebag-micronaut/jutebag/src/main/resources/webapp"
+        paths:  "file:src/main/resources/webapp"
+        enabled: true
+
