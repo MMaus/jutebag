@@ -6,16 +6,23 @@
 
 // the html comment is unnecessary thanks to leet-html VSCode plugin :) amazing!
 const AboutTemplate = /*html*/ `
-    <h1>About Template</h1>
+    <div class="bg-secondary text-white">
+        <h3> About JuteBag</h3>
+        <p>
+        JuteBag simplifies your regular shopping.
+        (created) 2020 by Moritz Maus.
+        </p>
+    </div>
 `;
 
 
 const NavbarTemplate = `
     <p class="bg-dark text-white">
         <nav>
-            <a class="btn" href="#/">Home</a>
-            <a class="btn" href="#/about">About</a>
+            <a class="btn" href="#/">Enter Items</a>
             <a class="btn" href="#/shopping">Go Shopping!</a>
+            <a class="btn" href="#/receipies">Receipies</a>
+            <a class="btn" href="#/about">About</a>
         </nav>
     </p>
 `;
