@@ -8,8 +8,8 @@ import Vue from './vue.esm.browser.js'
 import {
     About,
     Navbar,
-    Home,
-    Shopping
+    Shopping,
+    WhishList
 } from './components/components.js';
 
 import {
@@ -28,8 +28,8 @@ const router = new VueRouter({
         },
         {
             path: '/',
-            component: Home,
-            name: "Main page"
+            component: WhishList,
+            name: "Whish List"
         },
         {
             path: '/shopping',

@@ -49,9 +49,36 @@ const ShoppingTemplate = `
     </div>
 `;
 
+const WhishListTemplate = `
+    <div>
+        <h3>Shopping Items</h3>
+        <p>{{foo}}</p>
+        <ul>
+        <li v-for="item in items">{{item | pprint}} of {{item.qty}} barz
+        <button class="btn" v-on:click="addBeer">+beer</button>
+        </li>
+
+        </ul>
+        <div v-for="item in items" class="row" style="margin: auto">
+            <div class="col bg-secondary text-white border">{{item | pprint}}
+            </div>
+            <div class="col bg-secondary">
+                <div class="btn-group">
+                    <button type="button" class="btn btn-dark btn-lg" v-on:click="item.qty -= 1">-</button>
+                    <button type="button" class="btn btn-primary btn-lg">{{item.qty}}</button>
+                    <button type="button" class="btn btn-dark btn-lg" v-on:click="item.qty += 1">+</button>
+                </div>
+            </div>
+            <div class="col bg-dark"><button class="btn" v-on:click="addBeer">+beer</button></div>
+        </div>
+        <h3>End of items</h3>
+    </div>
+`;
+
 export {
     AboutTemplate,
     NavbarTemplate,
     MainTemplate,
-    ShoppingTemplate
+    ShoppingTemplate,
+    WhishListTemplate
 };

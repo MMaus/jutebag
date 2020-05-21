@@ -5,7 +5,8 @@
 import { 
     AboutTemplate, 
     NavbarTemplate,
-    ShoppingTemplate
+    ShoppingTemplate,
+    WhishListTemplate
 } from "../templates/templates.js";
 
 
@@ -28,12 +29,40 @@ const Navbar = {
 };
 
 
-const Home = {
-    template: '<h1> Home </h1>'
+const WhishList = {
+    bagData : [
+        { item : "Bier", qty: 2}
+    ],
+    template: WhishListTemplate,
+    data: function() {
+        return {
+            foo : "bar",
+            bag : this.bagData,
+            fullBag : [ 
+                { item: "bar" , qty : 2},
+                { item: "foo" , qty : 3}
+            ],
+            items : [ 
+                { item: "bar" , qty : 2},
+                { item: "foo" , qty : 3}
+            ]
+        };
+    },
+    methods: {
+        addBeer : function() {
+            this.items.push({ item: "beer", qty: 3})
+        }
+    },
+    filters: {
+        pprint(item) {
+            return item.item;
+        }
+    }
+
 };
 
 export { About,
-    Home,
+    WhishList,
     Navbar,
     Shopping
 };

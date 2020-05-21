@@ -55,5 +55,23 @@ var app7 = new Vue({
             {id: 1, text: "Salad"},
             {id: 2, text: "Saucages"}
         ]
-    }
+    } 
+})
+
+const myTemplate = `
+<div>
+<h1> header</h1>
+<ul>
+<li v-for="item in items">{{item}}</li>
+</ul>
+</div>
+`;
+
+
+var myApp = new Vue({
+    el: "#myTest",
+    data: {
+        items : ["A", "B"]
+    },
+    template: myTemplate
 })
