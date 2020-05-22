@@ -52,26 +52,24 @@ const ShoppingTemplate = `
 const WhishListTemplate = `
     <div>
         <h3>Shopping Items</h3>
-        <p>{{foo}}</p>
-        <ul>
-        <li v-for="item in items">{{item | pprint}} of {{item.qty}} barz
-        <button class="btn" v-on:click="addBeer">+beer</button>
-        </li>
-
-        </ul>
-        <div v-for="item in items" class="row" style="margin: auto">
-            <div class="col bg-secondary text-white border">{{item | pprint}}
+        <div class="input-group mb-3">
+            <input type="text" class="form-control" id="newWhishlistItem" ref="newItem">
+            <div class="input-group-append">
+                <button class="btn btn-primary" type="button" v-on:click="addNewItem()">Enter Item</button>
             </div>
-            <div class="col bg-secondary">
-                <div class="btn-group">
-                    <button type="button" class="btn btn-dark btn-lg" v-on:click="item.qty -= 1">-</button>
-                    <button type="button" class="btn btn-primary btn-lg">{{item.qty}}</button>
-                    <button type="button" class="btn btn-dark btn-lg" v-on:click="item.qty += 1">+</button>
-                </div>
-            </div>
-            <div class="col bg-dark"><button class="btn" v-on:click="addBeer">+beer</button></div>
         </div>
-        <h3>End of items</h3>
+        <div class="table-responsive">
+            <table class="table table-dark">
+                <tr v-for="item in items" v-bind:class="{'table-success': item.inCart}">
+                    <td v-on:click="toggleCart(item)" >{{item | pprint}}</td>
+                    <td class="text-right">
+                        <button type="button" class="btn btn-dark btn-lg" v-on:click="item.qty -= 1">-</button>
+                        <button type="button" class="btn btn-primary btn-lg" v-on:click="toggleCart(item)">{{item.qty}}</button>
+                        <button type="button" class="btn btn-dark btn-lg" v-on:click="item.qty += 1">+</button>
+                    </td>
+                </tr>
+            </table>
+        </div>
     </div>
 `;
 

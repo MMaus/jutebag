@@ -19,38 +19,8 @@
         <h1 class="display-3">JuteBag</h1>
         <h4>Your Shoppinglist</h2>
     </div>
-    <div id="demoApp"></div>
+    <div id="mainApp"></div>
 
-    <div class="container-sm p-3 my-3 bg-primary text-white">
-        <h3>shopping items (today & tonight)</h3>
-    </div>
-
-
-    <div id="fetchTest">
-        <!-- just a simple test of the fetch API -->
-        <button class="button bg-primary" onclick="fetchBag()">fetch remote</button>
-        <button class="button bg-primary" onclick="addToBag()">add remote</button>
-        <p id="remoteData">(remote data)</p>
-    </div>
-
-    <div id="control">
-        <input type="text" id="newItem"></input>
-        <button class="button" onclick="addItem()">add</button>
-        <br />
-        <p id="localData">(local data)</p>
-        <br />
-        <button class="button bg-dark" onclick="store()">store</button>
-        <button class="button bg-primary" onclick="restore()">restore</button>
-    </div>
-
-    <div id="testField" class="container-fluid" v-bind:class="{'bg-dark': bg2}">
-
-        <p>spacer</p>
-
-        <test-component msg="M E S S A G E"></test-component>
-        <p>some fancy paragraph with {{text}}</p>
-        some text
-    </div>
 
     <div id="shoppingList">
         <!-- v-bind:class="{bg-secondary: bg2}"> -->
@@ -69,69 +39,6 @@
         </script>
 
     </div>
-
-    <div id="test_space">{{message}},
-        <div id="other">
-            I need {{qty}} beer!</div>
-    </div>
-
-
-    <!-- example of a shopping item-->
-    <!--
-    <div class="row p-1 my-1 border">
-        <div class="col-sm-2 bg-primary"><img src="img/butter.jpg" class="img-fluid rounded-circle" /></div>
-        <div class="col-sm-7">
-            <p>Butter</p>
-        </div>
-        <div class="col-sm-2">
-            <table class="table table-borderless">
-                <tr>
-                    <td>
-                        <button type="button" class="btn btn-dark btn-lg">-</button>
-                    </td>
-                    <td>
-                        <p>1</p>
-                    </td>
-                    <td>
-                        <button type="button" class="btn btn-dark btn-lg">+</button>
-                    </td>
-                </tr>
-            </table>
-        </div>
-    </div>
-    -->
-
-    <!-- another try for the layout -->
-    <div id="item_milk" class="row bg-secondary" style="margin: auto">
-        <div class="col-sm-2 bg-primary"><img src="img/milk.jpg" class="img-fluid rounded-circle" /></div>
-        <div class="col-sm-8">
-            <p>Milk</p>
-            <p>{{message}}</p>
-        </div>
-        <div class="col-sm-2">
-            <div class="btn-group">
-                <button type="button" class="btn btn-dark btn-lg" v-on:click="qty -= 1">-</button>
-                <button type="button" class="btn btn-primary btn-lg">{{qty}}</button>
-                <button type="button" class="btn btn-dark btn-lg" v-on:click="qty += 1">+</button>
-            </div>
-        </div>
-    </div>
-
-    <div id="item_milk2" class="row border" style="margin: auto">
-        <div class="col-sm-2 bg-primary"><img src="img/milk.jpg" class="img-fluid rounded-circle" /></div>
-        <div class="col-sm-7">
-            <p>Bio-Milk</p>
-            <p>{{message}}</p>
-        </div>
-        <div class="col-sm-2">
-            <div class="btn-group">
-                <button type="button" class="btn btn-dark btn-lg" v-on:click="qty -= 1">-</button>
-                <button type="button" class="btn btn-primary btn-lg">{{qty}}</button>
-                <button type="button" class="btn btn-dark btn-lg" v-on:click="qty += 1">+</button>
-            </div>
-        </div>
-    </div>
-
 
     <!-- for "vue router" -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/vue-router/3.0.2/vue-router.js"></script>
