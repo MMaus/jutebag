@@ -61,10 +61,15 @@ const WhishListTemplate = `
         </div>
         <div class="table-responsive">
             <table class="table table-dark table-striped table-hover">
+                <thead>
+                    <th scope="col">Required</th><th scope="col">Qty</th>
+                </thead>
                 <item-display-tr></item-display-tr>
             </table>
-            <h5>In cart</h5>
             <table class="table table-dark table-striped table-hover">
+                <thead>    
+                    <th scope="col">In cart</th><th scope="col"></th>
+                </thead>
                 <display-in-bag-tr></display-in-bag-tr>
             </table>
         </div>

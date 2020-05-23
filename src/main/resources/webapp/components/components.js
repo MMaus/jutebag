@@ -137,18 +137,33 @@ const WhishList = {
             this.items.push({ item: itemName, qty: 1, inCart :false, highlight:false })
             this.$refs.newItem.value = "";
             console.log("adding new item! >" + itemName);
-
+        },
+        storeItems : function() {
+            localStorage.setItem("jutebag.items", JSON.stringify(this.items));
+        },
+        restoreItems : function() {
+            let storedData = localStorage.getItem("jutebag.items");
+            try {
+                let storeditems = JSON.parse(storedData);
+                this.items = storeditems;
+            } catch (e) {
+                console.log("unable to restore content from localstorage");
+                console.log(e);
+            }
         }
     },
     created : function() {
-        // todo: read data from localstore
         console.log("new wishlist created");
+        this.restoreItems();
+        console.log("whishlist restored from localStore");
     },
     destroyed : function() {
-        // todo: store data in localstore.
         // maybe: send data to server? => checkout promises in detail
         console.log("whishlist unloaded");
+        this.storeItems();
+        console.log("stored content to localStorage");
     }
+
 
 };
 
