@@ -49,9 +49,32 @@ const ShoppingTemplate = `
     </div>
 `;
 
+const WhishListTemplate = `
+    <div>
+        <h3>Shopping Items</h3>
+        <div class="input-group mb-3">
+            <input type="text" class="form-control" id="newWhishlistItem" ref="newItem"
+                v-on:keyup.enter="addNewItem()" placeholder="add item here">
+            <div class="input-group-append">
+                <button class="btn btn-primary" type="button" v-on:click="addNewItem()">Enter Item</button>
+            </div>
+        </div>
+        <div class="table-responsive">
+            <table class="table table-dark table-striped table-hover">
+                <item-display-tr></item-display-tr>
+            </table>
+            <h5>In cart</h5>
+            <table class="table table-dark table-striped table-hover">
+                <display-in-bag-tr></display-in-bag-tr>
+            </table>
+        </div>
+    </div>
+`;
+
 export {
     AboutTemplate,
     NavbarTemplate,
     MainTemplate,
-    ShoppingTemplate
+    ShoppingTemplate,
+    WhishListTemplate
 };

@@ -8,8 +8,8 @@ import Vue from './vue.esm.browser.js'
 import {
     About,
     Navbar,
-    Home,
-    Shopping
+    Shopping,
+    WhishList
 } from './components/components.js';
 
 import {
@@ -28,8 +28,8 @@ const router = new VueRouter({
         },
         {
             path: '/',
-            component: Home,
-            name: "Main page"
+            component: WhishList,
+            name: "Whish List"
         },
         {
             path: '/shopping',
@@ -41,37 +41,12 @@ const router = new VueRouter({
 })
 
 var testAppControl = new Vue({
-    el: "#demoApp",
+    el: "#mainApp",
     components: {
         'navbar': Navbar
     },
     router,
     template: MainTemplate
-})
-
-
-var testControl = new Vue({
-    el: "#test_space",
-    data: {
-        message: "hi",
-        qty: 1
-    }
-})
-
-var milkControl = new Vue({
-    el: "#item_milk",
-    data: {
-        message: "hi",
-        qty: 1
-    }
-})
-
-var biomilkControl = new Vue({
-    el: "#item_milk2",
-    data: {
-        message: "B.i.o",
-        qty: 2
-    }
 })
 
 function item(name) {
@@ -91,53 +66,6 @@ Vue.component('test-component', {
     }
 })
 
-
-var testApp = new Vue({
-    el: "#testField",
-    data: {
-        bg2: true,
-        text: "content"
-    },
-    created: function () {
-        // called when app is created
-        console.log("created callback executed");
-
-    }
-})
-
-var shoppingList = new Vue({
-    el: "#shoppingList",
-    data: {
-        bg2: true, // just for testing!
-        text: "content",
-        bag: [
-            item("milk"),
-            item("butter"),
-            item("beer"),
-            item("meat"),
-            item("cheese"),
-            item("bread"),
-            item("potatoes")
-        ]
-    },
-    filters: {
-        pprint(item) {
-            return item.id;
-        }
-    },
-    template: "#itemTemplate"
-    /*
-    `
-      <div>
-        <div v-for="item in bag">
-            <div class="row border" style="margin: auto">
-                <div class="col bg-primary text-white">{{item | pprint}}</div>
-            </div>
-        </div>
-      </div>
-      `*/
-
-})
 
 function addItem() {
     var value = document.getElementById("newItem").value
