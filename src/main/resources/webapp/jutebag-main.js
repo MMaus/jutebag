@@ -66,6 +66,7 @@ Vue.component('test-component', {
     }
 })
 
+
 function addItem() {
     var value = document.getElementById("newItem").value
     shoppingList.$data.bag.push(item(value))
