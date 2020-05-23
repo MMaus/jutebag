@@ -39,6 +39,8 @@ Vue.component('item-display-tr', {
                     <button type="button" class="btn btn-dark btn-lg" v-on:click="item.qty -= 1">-</button>
                     <button type="button" class="btn btn-primary btn-lg" v-on:click="toggleCart(item)">{{item.qty}}</button>
                     <button type="button" class="btn btn-dark btn-lg" v-on:click="item.qty += 1">+</button>
+                    <button type="button" class="btn btn-danger btn-lg" v-on:click="removeItem(item)">x</button>
+
                 </td>
             </tr>
         </tbody>
@@ -51,6 +53,11 @@ Vue.component('item-display-tr', {
     methods: {
         toggleCart : function(item){
             this.$parent.toggleCart(item);
+        },
+        removeItem : function(item) {
+            // fixme: this should be handled via events:
+            // "props down, events up"
+            this.$parent.removeItem(item);
         }
     },
     computed : {
@@ -99,30 +106,23 @@ Vue.component('display-in-bag-tr', {
 }
 );
 
+function newItemFactory(itemName) {
+    return {
+        item : "" + itemName,
+        qty : 1,
+        inCart: false,
+        highlight : false
+    };
+}
 
 const WhishList = {
-    bagData : [
-        { item : "Bier", qty: 2}
-    ],
     template: WhishListTemplate,
     data: function() {
         return {
-            bag : this.bagData,
-            fullBag : [ 
-                { item: "bar" , qty : 2},
-                { item: "foo" , qty : 3}
-            ],
-            items : [ 
-                { item: "bar" , qty : 2, inCart : false, highlight : false},
-                { item: "foo" , qty : 3, inCart : false, highlight : false},
-                { item: "baz" , qty : 3, inCart : true, highlight : false}
-            ]
+            items : [ newItemFactory("example") ]
         };
     },
     methods: {
-        addBeer : function() {
-            this.items.push({ item: "beer", qty: 3, inCart:false})
-        },
         toggleCart : function(item) {
             item.highlight = true;
             setTimeout(() => {
@@ -134,18 +134,30 @@ const WhishList = {
         },
         addNewItem : function() {
             let itemName = this.$refs.newItem.value;
-            this.items.push({ item: itemName, qty: 1, inCart :false, highlight:false })
+            this.items.push(
+                newItemFactory(itemName)
+                // { item: itemName, qty: 1, inCart :false, highlight:false }
+                );
             this.$refs.newItem.value = "";
             console.log("adding new item! >" + itemName);
+        },
+        removeItem : function(item) {
+            console.log("requested to remove item " + item);
+            let itemId = item.item;
+            let newItemList = this.items.filter(elem => elem.item != itemId);
+            this.items = newItemList;
+
         },
         storeItems : function() {
             localStorage.setItem("jutebag.items", JSON.stringify(this.items));
         },
         restoreItems : function() {
-            let storedData = localStorage.getItem("jutebag.items");
             try {
-                let storeditems = JSON.parse(storedData);
-                this.items = storeditems;
+                let storedData = localStorage.getItem("jutebag.items");
+                let storedItems = JSON.parse(storedData);
+                if (Array.isArray(storedItems)) { 
+                    this.items = storedItems;
+                }
             } catch (e) {
                 console.log("unable to restore content from localstorage");
                 console.log(e);
