@@ -2,8 +2,8 @@
  * Concatenation of all vue components. See ../templates/templates.js for details :D
  */
 
-import { 
-    AboutTemplate, 
+import {
+    AboutTemplate,
     NavbarTemplate,
     ShoppingTemplate,
     WhishListTemplate
@@ -17,7 +17,7 @@ const About = {
 
 const Shopping = {
     template: ShoppingTemplate,
-    data: function() {
+    data: function () {
         return {
             user: "Moe"
         }
@@ -25,7 +25,7 @@ const Shopping = {
 };
 
 const Navbar = {
-  template: NavbarTemplate
+    template: NavbarTemplate
 };
 
 
@@ -33,7 +33,7 @@ Vue.component('item-display-tr', {
     template: `
         <tbody>
             <tr v-for="item in items" v-bind:class="{'table-success': item.inCart,
-            'table-info' : item.highlight}">
+            'table-info' : item.highlight, 'table-danger' : item.toDelete, 'text-dark' : item.toDelete}">
                 <td v-on:click="toggleCart(item)" >{{item | pprint}}</td>
                 <td class="text-right fit">
                     <button type="button" class="btn btn-dark btn-lg" v-on:click="item.qty -= 1">-</button>
@@ -51,17 +51,17 @@ Vue.component('item-display-tr', {
         }
     },
     methods: {
-        toggleCart : function(item){
+        toggleCart: function (item) {
             this.$parent.toggleCart(item);
         },
-        removeItem : function(item) {
+        removeItem: function (item) {
             // fixme: this should be handled via events:
             // "props down, events up"
             this.$parent.removeItem(item);
         }
     },
-    computed : {
-        items : function() {
+    computed: {
+        items: function () {
             return this.$parent.items.filter(item => !item.inCart);
         }
 
@@ -88,17 +88,17 @@ Vue.component('display-in-bag-tr', {
         }
     },
     methods: {
-        toggleCart : function(item){
+        toggleCart: function (item) {
             item.highlight = true;
             setTimeout(() => {
                 item.inCart = item.inCart === true ? false : true;
                 item.highlight = false;
             }
-            , 200);
+                , 200);
         }
     },
-    computed : {
-        items : function() {
+    computed: {
+        items: function () {
             return this.$parent.items.filter(item => item.inCart);
         }
 
@@ -108,54 +108,58 @@ Vue.component('display-in-bag-tr', {
 
 function newItemFactory(itemName) {
     return {
-        item : "" + itemName,
-        qty : 1,
+        item: "" + itemName,
+        qty: 1,
         inCart: false,
-        highlight : false
+        highlight: false,
+        toDelete: false
     };
 }
 
 const WhishList = {
     template: WhishListTemplate,
-    data: function() {
+    data: function () {
         return {
-            items : [ newItemFactory("example") ]
+            items: [newItemFactory("example")]
         };
     },
     methods: {
-        toggleCart : function(item) {
+        toggleCart: function (item) {
             item.highlight = true;
             setTimeout(() => {
                 item.inCart = item.inCart === true ? false : true;
                 item.highlight = false;
-            }
-            , 200);
-
+                this.storeItems();
+            }, 200);
         },
-        addNewItem : function() {
+        addNewItem: function () {
             let itemName = this.$refs.newItem.value;
             this.items.push(
                 newItemFactory(itemName)
-                // { item: itemName, qty: 1, inCart :false, highlight:false }
-                );
+            );
             this.$refs.newItem.value = "";
             console.log("adding new item! >" + itemName);
+            this.storeItems();
         },
-        removeItem : function(item) {
+        removeItem: function (item) {
             console.log("requested to remove item " + item);
             let itemId = item.item;
-            let newItemList = this.items.filter(elem => elem.item != itemId);
-            this.items = newItemList;
-
+            item.toDelete = true;
+            setTimeout(() => {
+                let newItemList = this.items.filter(elem => elem.item != itemId);
+                this.items = newItemList;
+                this.storeItems();
+            }, 400);
         },
-        storeItems : function() {
-            localStorage.setItem("jutebag.items", JSON.stringify(this.items));
+        storeItems: function () {
+            let dataString = JSON.stringify(this.items);
+            localStorage.setItem("jutebag.items", dataString);
         },
-        restoreItems : function() {
+        restoreItems: function () {
             try {
                 let storedData = localStorage.getItem("jutebag.items");
                 let storedItems = JSON.parse(storedData);
-                if (Array.isArray(storedItems)) { 
+                if (Array.isArray(storedItems)) {
                     this.items = storedItems;
                 }
             } catch (e) {
@@ -164,22 +168,22 @@ const WhishList = {
             }
         }
     },
-    created : function() {
+    created: function () {
         console.log("new wishlist created");
         this.restoreItems();
         console.log("whishlist restored from localStore");
     },
-    destroyed : function() {
+    destroyed: function () {
         // maybe: send data to server? => checkout promises in detail
         console.log("whishlist unloaded");
         this.storeItems();
         console.log("stored content to localStorage");
     }
 
-
 };
 
-export { About,
+export {
+    About,
     WhishList,
     Navbar,
     Shopping

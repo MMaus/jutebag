@@ -1,6 +1,15 @@
 micronaut:
   application:
     name: jutebag
+  ssl:
+    enabled: true
+    # buildSelfSigned => once deployed to GCP switch to Let'sEncrypt
+    #keystore:
+    #  path: classpath:ssl.server.keystore
+    #  password: 123password
+    #  type: JKS
+    buildSelfSigned: true
+    port: 8443
   router:
     static-resources:
       main:

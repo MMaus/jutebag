@@ -59,7 +59,7 @@ const WhishListTemplate = `
                 <button class="btn btn-primary" type="button" v-on:click="addNewItem()">Enter Item</button>
             </div>
         </div>
-        <div class="table-responsive">
+        <div class="table-responsive" v-on:store-event="storeItems">
             <table class="table table-dark table-striped table-hover">
                 <thead>
                     <th scope="col">Required</th><th scope="col">Qty</th>
