@@ -51,7 +51,15 @@ const ShoppingTemplate = `
 
 const WhishListTemplate = `
     <div>
-        <h3>Shopping Items</h3>
+        <div class="d-flex justify-content-between">
+            <div>
+                <h3>Shopping Items</h3>
+            </div>
+            <div> 
+                <button class="btn btn-warning" v-on:click="storeToServer()">save</button>
+                <button class="btn btn-warning" v-on:click="loadFromServer()">load</button>
+            </div>
+        </div>
         <div class="input-group mb-3">
             <input type="text" class="form-control" id="newWhishlistItem" ref="newItem"
                 v-on:keyup.enter="addNewItem()" placeholder="add item here">

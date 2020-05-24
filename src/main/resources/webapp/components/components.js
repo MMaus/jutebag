@@ -10,6 +10,7 @@ import {
 } from "../templates/templates.js";
 import Vue from "../vue.esm.browser.js";
 
+var JUTE_SERVER = "https://192.168.178.21:8443/jutebag/";
 
 const About = {
     template: AboutTemplate,
@@ -166,7 +167,21 @@ const WhishList = {
                 console.log("unable to restore content from localstorage");
                 console.log(e);
             }
+        },
+        storeToServer : function() {
+            console.log("storing to server");
+        },
+        loadFromServer : function() {
+            fetch(JUTE_SERVER + "bag")
+                .then(res => res.json())
+                //.then(blob => console.log(blob))
+                //.then(data => { console.log("received data:" + data); return data;})
+                .then(data => console.log("fetched data:" + data)) //ocument.getElementById("remoteData").innerHTML =
+                    //"item=" + data.item + ", qty=" + data.qty)
+                .catch(error => console.log("ERROR:" + error))
+            console.log("loading from server");
         }
+
     },
     created: function () {
         console.log("new wishlist created");
