@@ -5,6 +5,7 @@ import io.micronaut.http.MediaType;
 import io.micronaut.http.annotation.*;
 import io.reactivex.Flowable;
 import net.hm10.dto.BagItem;
+import net.hm10.dto.Jutebag;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -21,8 +22,8 @@ public class JutebagController {
 
     @Get("/bag")
     @Produces(MediaType.APPLICATION_JSON)
-    public BagItem bag() {
-        BagItem stub = new BagItem("butter", 2);
+    public Jutebag bag() {
+        Jutebag stub = Jutebag.create("Bier", "Pizza", "Chips", "Schokolade");
         LOG.info("received GET request, returning {}", stub);
         return stub;
     }

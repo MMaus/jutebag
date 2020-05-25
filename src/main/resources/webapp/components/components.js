@@ -6,11 +6,14 @@ import {
     AboutTemplate,
     NavbarTemplate,
     ShoppingTemplate,
-    WhishListTemplate
+    WhishListTemplate,
+    WhishlistBagTableTemplate,
+    WhishlistItemTableTemplate
 } from "../templates/templates.js";
 import Vue from "../vue.esm.browser.js";
 
-var JUTE_SERVER = "https://192.168.178.21:8443/jutebag/";
+// var JUTE_SERVER = "https://192.168.178.21:8443/jutebag/";
+var JUTE_SERVER = "/jutebag/";
 
 const About = {
     template: AboutTemplate,
@@ -31,21 +34,7 @@ const Navbar = {
 
 
 Vue.component('item-display-tr', {
-    template: `
-        <tbody>
-            <tr v-for="item in items" v-bind:class="{'table-success': item.inCart,
-            'table-info' : item.highlight, 'table-danger' : item.toDelete, 'text-dark' : item.toDelete}">
-                <td v-on:click="toggleCart(item)" >{{item | pprint}}</td>
-                <td class="text-right fit">
-                    <button type="button" class="btn btn-dark btn-lg" v-on:click="item.qty -= 1">-</button>
-                    <button type="button" class="btn btn-primary btn-lg" v-on:click="toggleCart(item)">{{item.qty}}</button>
-                    <button type="button" class="btn btn-dark btn-lg" v-on:click="item.qty += 1">+</button>
-                    <button type="button" class="btn btn-danger btn-lg" v-on:click="removeItem(item)">x</button>
-
-                </td>
-            </tr>
-        </tbody>
-    `,
+    template: WhishlistItemTableTemplate,
     filters: {
         pprint(item) {
             return item.item;
@@ -71,18 +60,7 @@ Vue.component('item-display-tr', {
 );
 
 Vue.component('display-in-bag-tr', {
-    template: `
-        <tbody>
-            <tr v-for="item in items" v-bind:class="{'table-info': item.highlight}">
-                <td v-on:click="toggleCart(item)" class="font-italic small">{{item | pprint}}</td>
-                <td class="text-right fit">
-                    <button type="button" class="btn btn-dark btn-lg" v-on:click="item.qty -= 1">-</button>
-                    <button type="button" class="btn btn-primary btn-lg" v-on:click="toggleCart(item)">{{item.qty}}</button>
-                    <button type="button" class="btn btn-dark btn-lg" v-on:click="item.qty += 1">+</button>
-                </td>
-            </tr>
-        </tbody>
-    `,
+    template: WhishlistBagTableTemplate,
     filters: {
         pprint(item) {
             return item.item;
@@ -107,7 +85,11 @@ Vue.component('display-in-bag-tr', {
 }
 );
 
-function newItemFactory(itemName) {
+/**
+ * Create an item to display from a name with qty 1.
+ * @param {String} itemName 
+ */
+function createItem(itemName) {
     return {
         item: "" + itemName,
         qty: 1,
@@ -117,11 +99,42 @@ function newItemFactory(itemName) {
     };
 }
 
+/**
+ * Converts a backend item (data only) to a frontend-visible item
+ * with "highlight" and "toDelete" attributes
+ * 
+ * @param {object} itemData 
+ */
+function toFrontendItem(itemData) {
+    itemData.highlight = false;
+    itemData.toDelete = false;
+    return itemData;
+}
+
+/**
+ * parse the server data "/bag" and return a list of shopping cart items.
+ * Expected format:
+ * {
+ *   "items" : [item1, ... , itemN]
+ * }
+ * @param {object} serverData 
+ */
+function parseServerData(serverData) {
+    let bagItems = serverData.items;
+    if (bagItems instanceof Array) {
+        let result = bagItems.map(toFrontendItem);
+        return result;
+    } else {
+        console.log("received data is not a list", JSON.stringify(bagItems));
+        return [];
+    }
+}
+
 const WhishList = {
     template: WhishListTemplate,
     data: function () {
         return {
-            items: [newItemFactory("example")]
+            items: [createItem("example")]
         };
     },
     methods: {
@@ -136,7 +149,7 @@ const WhishList = {
         addNewItem: function () {
             let itemName = this.$refs.newItem.value;
             this.items.push(
-                newItemFactory(itemName)
+                createItem(itemName)
             );
             this.$refs.newItem.value = "";
             console.log("adding new item! >" + itemName);
@@ -168,16 +181,13 @@ const WhishList = {
                 console.log(e);
             }
         },
-        storeToServer : function() {
+        storeToServer: function () {
             console.log("storing to server");
         },
-        loadFromServer : function() {
+        loadFromServer: function () {
             fetch(JUTE_SERVER + "bag")
                 .then(res => res.json())
-                //.then(blob => console.log(blob))
-                //.then(data => { console.log("received data:" + data); return data;})
-                .then(data => console.log("fetched data:" + data)) //ocument.getElementById("remoteData").innerHTML =
-                    //"item=" + data.item + ", qty=" + data.qty)
+                .then(data => this.items = parseServerData(data)) //ocument.getElementById("remoteData").innerHTML =
                 .catch(error => console.log("ERROR:" + error))
             console.log("loading from server");
         }
@@ -196,6 +206,7 @@ const WhishList = {
     }
 
 };
+
 
 export {
     About,
