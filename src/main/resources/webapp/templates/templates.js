@@ -51,7 +51,15 @@ const ShoppingTemplate = `
 
 const WhishListTemplate = `
     <div>
-        <h3>Shopping Items</h3>
+        <div class="d-flex justify-content-between">
+            <div>
+                <h3>Shopping Items</h3>
+            </div>
+            <div> 
+                <button class="btn btn-warning" v-on:click="storeToServer()">save</button>
+                <button class="btn btn-warning" v-on:click="loadFromServer()">load</button>
+            </div>
+        </div>
         <div class="input-group mb-3">
             <input type="text" class="form-control" id="newWhishlistItem" ref="newItem"
                 v-on:keyup.enter="addNewItem()" placeholder="add item here">
@@ -59,16 +67,50 @@ const WhishListTemplate = `
                 <button class="btn btn-primary" type="button" v-on:click="addNewItem()">Enter Item</button>
             </div>
         </div>
-        <div class="table-responsive">
+        <div class="table-responsive" v-on:store-event="storeItems">
             <table class="table table-dark table-striped table-hover">
+                <thead>
+                    <th scope="col">Required</th><th scope="col">Qty</th>
+                </thead>
                 <item-display-tr></item-display-tr>
             </table>
-            <h5>In cart</h5>
             <table class="table table-dark table-striped table-hover">
+                <thead>    
+                    <th scope="col">In cart</th><th scope="col"></th>
+                </thead>
                 <display-in-bag-tr></display-in-bag-tr>
             </table>
         </div>
     </div>
+`;
+
+const WhishlistItemTableTemplate = `
+        <tbody>
+            <tr v-for="item in items" v-bind:class="{'table-success': item.inCart,
+            'table-info' : item.highlight, 'table-danger' : item.toDelete, 'text-dark' : item.toDelete}">
+                <td v-on:click="toggleCart(item)" >{{item | pprint}}</td>
+                <td class="text-right fit">
+                    <button type="button" class="btn btn-dark btn-lg" v-on:click="item.qty -= 1">-</button>
+                    <button type="button" class="btn btn-primary btn-lg" v-on:click="toggleCart(item)">{{item.qty}}</button>
+                    <button type="button" class="btn btn-dark btn-lg" v-on:click="item.qty += 1">+</button>
+                    <button type="button" class="btn btn-danger btn-lg" v-on:click="removeItem(item)">x</button>
+
+                </td>
+            </tr>
+        </tbody>
+`;
+
+const WhishlistBagTableTemplate = `
+        <tbody>
+            <tr v-for="item in items" v-bind:class="{'table-info': item.highlight}">
+                <td v-on:click="toggleCart(item)" class="font-italic small">{{item | pprint}}</td>
+                <td class="text-right fit">
+                    <button type="button" class="btn btn-dark btn-lg" v-on:click="item.qty -= 1">-</button>
+                    <button type="button" class="btn btn-primary btn-lg" v-on:click="toggleCart(item)">{{item.qty}}</button>
+                    <button type="button" class="btn btn-dark btn-lg" v-on:click="item.qty += 1">+</button>
+                </td>
+            </tr>
+        </tbody>
 `;
 
 export {
@@ -76,5 +118,7 @@ export {
     NavbarTemplate,
     MainTemplate,
     ShoppingTemplate,
-    WhishListTemplate
+    WhishListTemplate,
+    WhishlistItemTableTemplate,
+    WhishlistBagTableTemplate
 };

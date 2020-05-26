@@ -1,0 +1,30 @@
+{
+  "short_name": "JuteBag.IO",
+  "name": "JuteBag shopping helper",
+  "description": "JuteBag supports dealing with your regular shopping experience",
+  "icons": [
+    {
+      "src": "/local/img/jutebag_icon.png",
+      "type": "image/png",
+      "sizes": "50x60"
+    }  ],
+  "start_url": "/local/jutebag.html",
+  "background_color": "#3367D6",
+  "display": "standalone",
+  "scope": "/local/",
+  "theme_color": "#3367D6",
+  "shortcuts": [
+    {
+      "name": "Add items",
+      "short_name": "Add",
+      "description": "Add items now",
+      "url": "/local/jutebag.html#addItems",
+      "icons": [ {
+          "src": "/local/img/jutebag_icon.png",
+          "type": "image/png",
+          "sizes": "50x60"
+        }  ]
+          
+    }
+  ]
+}
