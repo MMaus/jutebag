@@ -130,6 +130,24 @@ function parseServerData(serverData) {
     }
 }
 
+
+function storeBagOnServer(items) {
+    fetch("/jutebag/add",
+        {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body:
+                JSON.stringify(items)
+        })
+        .then(res => res.json())
+        .then(data => {
+            console.log("Received store result: " + JSON.stringify(data));
+        });
+}
+
+
 const WhishList = {
     template: WhishListTemplate,
     data: function () {
@@ -183,6 +201,7 @@ const WhishList = {
         },
         storeToServer: function () {
             console.log("storing to server");
+            storeBagOnServer(this.items);
         },
         loadFromServer: function () {
             fetch(JUTE_SERVER + "bag")

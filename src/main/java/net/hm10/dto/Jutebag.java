@@ -11,6 +11,7 @@ import java.util.stream.Collectors;
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 public class Jutebag {
 
+
     private List<BagItem> items;
 
     @SuppressWarnings("unused")
@@ -18,13 +19,21 @@ public class Jutebag {
         this(Collections.emptyList());
     }
 
-    Jutebag(Collection<BagItem> items) {
+    public Jutebag(Collection<BagItem> items) {
         this.items = new ArrayList<>();
         this.items.addAll(items);
     }
 
     public static Jutebag create(String ... items) {
         return new Jutebag(Arrays.stream(items).map(item -> new BagItem(item, 1)).collect(Collectors.toList()));
+    }
+
+    public List<BagItem> getItems() {
+        return items;
+    }
+
+    public void setItems(List<BagItem> items) {
+        this.items = items;
     }
 
     @Override

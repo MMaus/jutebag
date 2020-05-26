@@ -3,6 +3,8 @@ package net.hm10.dto;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.util.Objects;
+
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 public class BagItem {
 
@@ -41,6 +43,21 @@ public class BagItem {
                 "item='" + name + '\'' +
                 ", qty=" + qty +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        BagItem bagItem = (BagItem) o;
+        return qty == bagItem.qty &&
+                inCart == bagItem.inCart &&
+                Objects.equals(name, bagItem.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, qty, inCart);
     }
 
 }
