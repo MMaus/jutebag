@@ -74,6 +74,12 @@ Vue.component('display-in-bag-tr', {
                 item.highlight = false;
             }
                 , 200);
+        },
+        moveUp : function(item) {
+            console.log("moving up " + item.item)
+        },
+        moveDown : function(item) {
+            console.log("moving down " + item.item)
         }
     },
     computed: {
