@@ -18,24 +18,24 @@ const AboutTemplate = /*html*/ `
 
 const NavbarTemplate = `
     <!-- <p class="bg-dark text-white"> -->
-        <nav class="navbar navbar-expand-sm navbar-dark bg-dark sticky-top">
+        <nav class="navbar navbar-expand-sm navbar-dark bg-dark sticky-top"> 
 
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 Menu <span class="navbar-toggler-icon text-right"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto">
-                <li class="nav-item active">
+                <li class="nav-item active text-primary">
                     <a class="nav-link" href="#/">Enter Items</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#/shopping">Go Shopping!</a>
+                    <a class="nav-link text-primary" href="#/shopping">Go Shopping!</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#/receipies">Receipies</a>
+                    <a class="nav-link text-primary" href="#/receipies">Receipies</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#/about">About</a>
+                    <a class="nav-link text-primary" href="#/about">About</a>
                 </li>
                 </ul>
             </div>
