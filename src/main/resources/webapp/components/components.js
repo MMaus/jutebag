@@ -76,10 +76,22 @@ Vue.component('display-in-bag-tr', {
                 , 200);
         },
         moveUp : function(item) {
-            console.log("moving up " + item.item)
+            let originalIndex = this.$parent.items.indexOf(item);
+            if (originalIndex > 0) {
+                // method explanation for JS noobs like me:
+                // the inner (2nd) splice is called first, with two effects:
+                //     - remove the i'th item from the list, and
+                //     - return it (that's what the [0] is for)
+                // the outer splice then inserts the item at the new position
+               this.$parent.items.splice(originalIndex - 1, 0, this.$parent.items.splice(originalIndex, 1)[0]); 
+            }
         },
         moveDown : function(item) {
-            console.log("moving down " + item.item)
+            let originalIndex = this.$parent.items.indexOf(item);
+            let maxIndex = this.$parent.items.length - 1
+            if (originalIndex < maxIndex) {
+               this.$parent.items.splice(originalIndex + 1, 0, this.$parent.items.splice(originalIndex, 1)[0]); 
+            }
         }
     },
     computed: {
