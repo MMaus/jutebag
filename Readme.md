@@ -9,6 +9,8 @@ For all visitors - feel free to look around, but please apologise all those horr
 
 # Is it dead?
 
+**EDIT** Yes, it is. 
+
 No, it ain't. It's just undergoing the first major refactoring - switching to @vue/cli which provides both typescript and webpack support, and enables a much more professional (joyful) development.
 At the same time, the micro service structure will be refined into (current concept) 
 - an ngnix entry point which serves the app
